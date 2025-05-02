@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Sabor & Arte - Menu Digital</title>
+    <style>
+        /* Variáveis e Reset */
+        :root {
+            --cor-primaria: #9c3d54;
+            --cor-secundaria: #ffe8d6;
+            --cor-texto: #2b2b2b;
+            --cor-clara: #fff;
+            --cor-destaque: #e27d60;
+            --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transicao: all 0.3s ease;
+            --borda-raio: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--cor-secundaria);
+            color: var(--cor-texto);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+        
+        /* Cabeçalho */
+        header {
+            background-color: var(--cor-primaria);
+            color: var(--cor-clara);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: var(--sombra-suave);
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: var(--cor-clara);
+            color: var(--cor-primaria);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .titulo-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .titulo-container p {
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+        
+        /* Navegação */
+        nav {
+            background-color: #8a2846;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--sombra-suave);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .menu-categorias {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 5px;
+            scrollbar-width: thin;
+        }
+        
+        .menu-categorias li {
+            margin: 0 10px;
+        }
+        
+        .menu-categorias a {
+            color: var(--cor-clara);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: var(--borda-raio);
+            transition: var(--transicao);
+        }
+        
+        .menu-categorias a:hover, .menu-categorias a.ativo {
+            background-color: var(--cor-destaque);
+        }
+        
+        .carrinho-btn {
+            background-color: var(--cor-destaque);
+            color: var(--cor-clara);
+            padding: 8px 15px;
+            border-radius: var(--borda-raio);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: var(--transicao);
+        }
+        
+        .carrinho-btn:hover {
+            background-color: #d26e54;
+        }
+        
+        .carrinho-contador {
+            background-color: var(--cor-clara);
+            color: var(--cor-primaria);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* Seção de Boas-vindas */
+        .bem-vindo {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .bem-vindo h2 {
+            color: var(--cor-primaria);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .bem-vindo p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Banner Promocional */
+        .banner-promo {
+            background: linear-gradient(135deg, var(--cor-destaque), var(--cor-primaria));
+            color: var(--cor-clara);
+            padding: 25px;
+            border-radius: var(--borda-raio);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+        }
+        
+        .banner-promo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .banner-promo p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .banner-btn {
+            background-color: var(--cor-clara);
+            color: var(--cor-primaria);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transicao);
+        }
+        
+        .banner-btn:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.05);
+        }
+        
+        /* Categorias */
+        .categoria {
+            margin-bottom: 50px;
+            scroll-margin-top: 100px;
+        }
+        
+        .categoria h2 {
+            color: var(--cor-primaria);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--cor-primaria);
+            padding-bottom: 10px;
+        }
+        
+        /* Grade de Produtos */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .produto {
+            background-color: var(--cor-clara);
+            border-radius: var(--borda-raio);
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            transition: var(--transicao);
+            position: relative;
+        }
+        
+        .produto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .produto-img {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #999;
+        }
+        
+        .produto-promocao {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--cor-destaque);
+            color: var(--cor-clara);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .produto-info {
+            padding: 20px;
+        }
+        
+        .produto-nome {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--cor-primaria);
+        }
+        
+        .produto-descricao {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .produto-preco {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .preco-atual {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .preco-anterior {
+            font-size: 1rem;
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .produto-acoes {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .adicionar-btn {
+            background-color: var(--cor-primaria);
+            color: var(--cor-clara);
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--borda-raio);
+            cursor: pointer;
+            flex-grow: 1;
+            margin-right: 10px;
+            transition: var(--transicao);
+        }
+        
+        .adicionar-btn:hover {
+            background-color: #8a2846;
+        }
+        
+        .info-btn {
+            background-color: transparent;
+            color: var(--cor-primaria);
+            border: 1px solid var(--cor-primaria);
+            padding: 10px;
+            border-radius: var(--borda-raio);
+            cursor: pointer;
+            transition: var(--transicao);
+        }
+        
+        .info-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Carrinho de Compra */
+        #carrinho-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .carrinho-conteudo {
+            background-color: var(--cor-clara);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--borda-raio);
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .carrinho-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .carrinho-titulo {
+            color: var(--cor-primaria);
+            font-size: 1.5rem;
+        }
+        
+        .fechar-carrinho {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .carrinho-itens {
+            margin-bottom: 25px;
+        }
+        
+        .carrinho-vazio {
+            text-align: center;
+            padding: 30px 0;
+            color: #999;
+        }
+        
+        .carrinho-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .carrinho-item-img {
+            width: 80px;
+            height: 80px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        
+        .carrinho-item-detalhes {
+            flex-grow: 1;
+        }
+        
+        .carrinho-item-nome {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .carrinho-item-preco {
+            color: var(--cor-primaria);
+            margin-bottom: 10px;
+        }
+        
+        .carrinho-item-controles {
+            display: flex;
+            align-items: center;
+        }
+        
+        .qtd-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+        
+        .qtd-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+        
+        .remover-item {
+            margin-left: 15px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+        }
+        
+        .remover-item:hover {
+            color: var(--cor-primaria);
+        }
+        
+        .carrinho-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            border-top: 2px solid #eee;
+        }
+        
+        .total-texto {
+            font-weight: bold;
+        }
+        
+        .total-valor {
+            color: var(--cor-primaria);
+            font-weight: bold;
+        }
+        
+        .carrinho-acoes {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .continuar-comprando, .finalizar-pedido {
+            padding: 12px;
+            border-radius: var(--borda-raio);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transicao);
+            flex-grow: 1;
+        }
+        
+        .continuar-comprando {
+            background-color: #f0f0f0;
+            color: var(--cor-texto);
+        }
+        
+        .continuar-comprando:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .finalizar-pedido {
+            background-color: var(--cor-primaria);
+            color: var(--cor-clara);
+        }
+        
+        .finalizar-pedido:hover {
+            background-color: #8a2846;
+        }
+        
+        /* Produto Modal */
+        #produto-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .produto-modal-conteudo {
+            background-color: var(--cor-clara);
+            width: 100%;
+            max-width: 800px;
+            border-radius: var(--borda-raio);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+        
+        .produto-modal-cabecalho {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .produto-modal-titulo {
+            color: var(--cor-primaria);
+            font-size: 1.5rem;
+        }
+        
+        .fechar-produto-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .produto-modal-corpo {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .produto-modal-corpo {
+                flex-direction: row;
+            }
+        }
+        
+        .produto-modal-img {
+            flex-basis: 40%;
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #999;
+        }
+        
+        .produto-modal-detalhes {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .produto-modal-descricao {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .produto-modal-info-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-item-titulo {
+            font-weight: bold;
+            margin-right: 10px;
+            color: var(--cor-primaria);
+        }
+        
+        .produto-modal-preco {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--cor-primaria);
+            margin: 20px 0;
+        }
+        
+        .produto-modal-acoes {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .produto-modal-adicionar {
+            background-color: var(--cor-primaria);
+            color: var(--cor-clara);
+            border: none;
+            padding: 12px;
+            border-radius: var(--borda-raio);
+            cursor: pointer;
+            flex-grow: 1;
+            font-weight: bold;
+            transition: var(--transicao);
+        }
+        
+        .produto-modal-adicionar:hover {
+            background-color: #8a2846;
+        }
+        
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-primaria);
+            color: var(--cor-clara);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-secao h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-secao h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--cor-destaque);
+        }
+        
+        .sobre-texto {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .contato-info {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contato-info span {
+            margin-right: 10px;
+        }
+        
+        .links-rapidos ul {
+            list-style: none;
+        }
+        
+        .links-rapidos li {
+            margin-bottom: 10px;
+        }
+        
+        .links-rapidos a {
+            color: var(--cor-clara);
+            text-decoration: none;
+            transition: var(--transicao);
+        }
+        
+        .links-rapidos a:hover {
+            color: var(--cor-destaque);
+            padding-left: 5px;
+        }
+        
+        .horarios-funcionamento p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-inferior {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .menu-categorias {
+                width: 100%;
+                justify-content: center;
+                padding-bottom: 10px;
+            }
+            
+            .produto-modal-img {
+                height: 200px;
+            }
+            
+            .carrinho-item {
+                flex-direction: column;
+            }
+            
+            .carrinho-item-img {
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Utilitários */
+        .esconder-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .esconder-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">S&A</div>
+            <div class="titulo-container">
+                <h1>Sabor & Arte</h1>
+                <p>Culinária autoral com ingredientes frescos</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navegação -->
+    <nav>
+        <div class="nav-container">
+            <ul class="menu-categorias esconder-scroll">
+                <li><a href="#entradas" class="ativo">Entradas</a></li>
+                <li><a href="#pratos-principais">Pratos Principais</a></li>
+                <li><a href="#massas">Massas</a></li>
+                <li><a href="#sobremesas">Sobremesas</a></li>
+                <li><a href="#bebidas">Bebidas</a></li>
+            </ul>
+            
+            <button class="carrinho-btn" onclick="abrirCarrinho()">
+                Carrinho <span class="carrinho-contador">0</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Seção de Boas-vindas -->
+        <section class="bem-vindo">
+            <h2>Bem-vindo ao Sabor & Arte</h2>
+            <p>Experimente nossa culinária única que combina tradição e inovação. 
+               Todos os nossos pratos são preparados com ingredientes frescos e selecionados
+               para proporcionar uma experiência gastronômica inesquecível.</p>
+        </section>
+        
+        <!-- Banner Promocional -->
+        <section class="banner-promo">
+            <h3>Promoção de Primavera</h3>
+            <p>Aproveite 15% de desconto em pratos selecionados de terça a quinta-feira!</p>
+            <button class="banner-btn" onclick="scrollParaSecao('pratos-principais')">Ver Ofertas</button>
+        </section>
+        
+        <!-- Categorias de Produtos -->
+        <section id="entradas" class="categoria">
+            <h2>Entradas</h2>
+            <div class="produtos-grid">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Bruschetta Caprese</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Bruschetta Caprese</h3>
+                        <p class="produto-descricao">Fatias de pão italiano torrado com tomate, mussarela de búfala, manjericão fresco e redução de balsâmico.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 32,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Bruschetta Caprese', 32.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Bruschetta Caprese', 'Fatias de pão italiano torrado com tomate, mussarela de búfala, manjericão fresco e redução de balsâmico.', 32.90, 'Contém glúten e lactose', '15 minutos', 'Vegetariano')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Carpaccio de Filé</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Carpaccio de Filé</h3>
+                        <p class="produto-descricao">Finas fatias de filé mignon com molho de alcaparras, rúcula, lascas de parmesão e torradas.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 42,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Carpaccio de Filé', 42.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Carpaccio de Filé', 'Finas fatias de filé mignon com molho de alcaparras, rúcula, lascas de parmesão e torradas.', 42.90, 'Contém glúten e lactose', 'Servido frio', 'Serve 2 pessoas')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Camarão Empanado</div>
+                    <div class="produto-promocao">-10%</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Camarão Empanado</h3>
+                        <p class="produto-descricao">Camarões crocantes servidos com molho tártaro caseiro e limão siciliano.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 44,90</span>
+                            <span class="preco-anterior">R$ 49,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Camarão Empanado', 44.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Camarão Empanado', 'Camarões crocantes servidos com molho tártaro caseiro e limão siciliano.', 44.90, 'Contém glúten e crustáceos', '20 minutos', 'Serve 2 pessoas')">i</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="pratos-principais" class="categoria">
+            <h2>Pratos Principais</h2>
+            <div class="produtos-grid">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Salmão Grelhado</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Salmão Grelhado</h3>
+                        <p class="produto-descricao">Filé de salmão grelhado com crosta de ervas, risoto de limão siciliano e aspargos.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 78,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Salmão Grelhado', 78.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Salmão Grelhado', 'Filé de salmão grelhado com crosta de ervas, risoto de limão siciliano e aspargos.', 78.90, 'Contém lactose e peixe', '25 minutos', 'Sem glúten')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Filé ao Molho Madeira</div>
+                    <div class="produto-promocao">Especial</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Filé ao Molho Madeira</h3>
+                        <p class="produto-descricao">Medalhão de filé mignon ao molho madeira com batatas rústicas e legumes salteados.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 82,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Filé ao Molho Madeira', 82.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Filé ao Molho Madeira', 'Medalhão de filé mignon ao molho madeira com batatas rústicas e legumes salteados.', 82.90, 'Sem restrições', '30 minutos', 'Prato exclusivo do chef')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Risoto de Cogumelos</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Risoto de Cogumelos</h3>
+                        <p class="produto-descricao">Arroz arbóreo cozido lentamente com mix de cogumelos frescos, vinho branco, manteiga e parmesão.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 64,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Risoto de Cogumelos', 64.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Risoto de Cogumelos', 'Arroz arbóreo cozido lentamente com mix de cogumelos frescos, vinho branco, manteiga e parmesão.', 64.90, 'Contém lactose', '25 minutos', 'Vegetariano')">i</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="massas" class="categoria">
+            <h2>Massas</h2>
+            <div class="produtos-grid">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Fettuccine ao Molho Alfredo</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Fettuccine ao Molho Alfredo</h3>
+                        <p class="produto-descricao">Massa fresca com molho cremoso de queijo e cogumelos, finalizado com lascas de parmesão.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 58,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Fettuccine ao Molho Alfredo', 58.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Fettuccine ao Molho Alfredo', 'Massa fresca com molho cremoso de queijo e cogumelos, finalizado com lascas de parmesão.', 58.90, 'Contém glúten e lactose', '20 minutos', 'Vegetariano')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Spaghetti alla Carbonara</div>
+                    <div class="produto-promocao">-15%</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Spaghetti alla Carbonara</h3>
+                        <p class="produto-descricao">Clássico italiano com bacon crocante, ovo, queijo pecorino e pimenta preta.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 54,90</span>
+                            <span class="preco-anterior">R$ 64,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Spaghetti alla Carbonara', 54.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Spaghetti alla Carbonara', 'Clássico italiano com bacon crocante, ovo, queijo pecorino e pimenta preta.', 54.90, 'Contém glúten, lactose e ovo', '18 minutos', 'Receita tradicional italiana')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Ravioli de Búfala</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Ravioli de Búfala</h3>
+                        <p class="produto-descricao">Massa recheada com mussarela de búfala, tomate seco e manjericão ao molho pomodoro.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 62,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Ravioli de Búfala', 62.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Ravioli de Búfala', 'Massa recheada com mussarela de búfala, tomate seco e manjericão ao molho pomodoro.', 62.90, 'Contém glúten e lactose', '22 minutos', 'Vegetariano')">i</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sobremesas" class="categoria">
+            <h2>Sobremesas</h2>
+            <div class="produtos-grid">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Tiramisù</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Tiramisù</h3>
+                        <p class="produto-descricao">Clássico italiano com biscoitos champagne, café, mascarpone e cacau em pó.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 28,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Tiramisù', 28.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Tiramisù', 'Clássico italiano com biscoitos champagne, café, mascarpone e cacau em pó.', 28.90, 'Contém glúten, lactose e ovo', 'Sobremesa gelada', 'Receita tradicional italiana')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Petit Gateau</div>
+                    <div class="produto-promocao">Favorito</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Petit Gateau</h3>
+                        <p class="produto-descricao">Bolo quente de chocolate com centro derretido, servido com sorvete de creme.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 32,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Petit Gateau', 32.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Petit Gateau', 'Bolo quente de chocolate com centro derretido, servido com sorvete de creme.', 32.90, 'Contém glúten, lactose e ovo', '15 minutos', 'Servido quente')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Cheesecake de Frutas Vermelhas</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Cheesecake de Frutas Vermelhas</h3>
+                        <p class="produto-descricao">Base crocante de biscoito com creme de cream cheese e calda de frutas vermelhas.</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 29,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Cheesecake de Frutas Vermelhas', 29.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Cheesecake de Frutas Vermelhas', 'Base crocante de biscoito com creme de cream cheese e calda de frutas vermelhas.', 29.90, 'Contém glúten e lactose', 'Sobremesa gelada', 'Feito artesanalmente')">i</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="bebidas" class="categoria">
+            <h2>Bebidas</h2>
+            <div class="produtos-grid">
+                <!-- Produto 1 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Água Mineral</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Água Mineral</h3>
+                        <p class="produto-descricao">Água mineral com ou sem gás (500ml).</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 6,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Água Mineral', 6.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Água Mineral', 'Água mineral com ou sem gás (500ml).', 6.90, 'Sem restrições', 'Servida gelada', 'Opções: com gás ou sem gás')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 2 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Vinho Tinto</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Vinho Tinto</h3>
+                        <p class="produto-descricao">Taça de vinho tinto da casa (150ml).</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 25,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Vinho Tinto', 25.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Vinho Tinto', 'Taça de vinho tinto da casa (150ml).', 25.90, 'Contém álcool', 'Temperatura ideal', 'Consulte opções disponíveis')">i</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Produto 3 -->
+                <div class="produto">
+                    <div class="produto-img">Imagem de Suco Natural</div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">Suco Natural</h3>
+                        <p class="produto-descricao">Suco de frutas frescas (400ml).</p>
+                        <div class="produto-preco">
+                            <span class="preco-atual">R$ 14,90</span>
+                        </div>
+                        <div class="produto-acoes">
+                            <button class="adicionar-btn" onclick="adicionarAoCarrinho('Suco Natural', 14.90)">Adicionar</button>
+                            <button class="info-btn" onclick="abrirModalProduto('Suco Natural', 'Suco de frutas frescas (400ml).', 14.90, 'Sem restrições', 'Feito na hora', 'Opções: laranja, limão, abacaxi, melancia, maracujá')">i</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-secao">
+                <h3>Sobre Nós</h3>
+                <p class="sobre-texto">O Restaurante Sabor & Arte oferece uma experiência gastronômica única há mais de 10 anos. Nossa cozinha combina tradição e inovação para criar pratos memoráveis.</p>
+            </div>
+            
+            <div class="footer-secao">
+                <h3>Contato</h3>
+                <div class="contato-info">
+                    <span>📍</span>
+                    <div>Av. das Flores, 1234<br>Centro, São Paulo - SP</div>
+                </div>
+                <div class="contato-info">
+                    <span>📞</span>
+                    <div>(11) 3456-7890</div>
+                </div>
+                <div class="contato-info">
+                    <span>✉️</span>
+                    <div>contato@saborearte.com.br</div>
+                </div>
+            </div>
+            
+            <div class="footer-secao links-rapidos">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#entradas">Entradas</a></li>
+                    <li><a href="#pratos-principais">Pratos Principais</a></li>
+                    <li><a href="#sobremesas">Sobremesas</a></li>
+                    <li><a href="#" onclick="abrirCarrinho(); return false;">Ver Carrinho</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-secao">
+                <h3>Horários de Funcionamento</h3>
+                <p>Segunda - Quinta: 12h às 15h | 19h às 23h</p>
+                <p>Sexta - Sábado: 12h às 16h | 19h às 00h</p>
+                <p>Domingo: 12h às 16h</p>
+            </div>
+        </div>
+        
+        <div class="footer-inferior">
+            <p>&copy; 2025 Restaurante Sabor & Arte. Todos os direitos reservados. Desenvolvido por [Seu Nome]</p>
+        </div>
+    </footer>
+    
+    <!-- Modal do Carrinho -->
+    <div id="carrinho-modal">
+        <div class="carrinho-conteudo">
+            <div class="carrinho-cabecalho">
+                <h3 class="carrinho-titulo">Seu Pedido</h3>
+                <button class="fechar-carrinho" onclick="fecharCarrinho()">&times;</button>
+            </div>
+            
+            <div class="carrinho-itens">
+                <div class="carrinho-vazio">Seu carrinho está vazio.</div>
+                <!-- Os itens do carrinho serão adicionados aqui via JavaScript -->
+            </div>
+            
+            <div class="carrinho-total">
+                <span class="total-texto">Total</span>
+                <span class="total-valor">R$ 0,00</span>
+            </div>
+            
+            <div class="carrinho-acoes">
+                <button class="continuar-comprando" onclick="fecharCarrinho()">Continuar Escolhendo</button>
+                <button class="finalizar-pedido" onclick="finalizarPedido()">Finalizar Pedido</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Produto -->
+    <div id="produto-modal">
+        <div class="produto-modal-conteudo">
+            <div class="produto-modal-cabecalho">
+                <h3 class="produto-modal-titulo">Título do Produto</h3>
+                <button class="fechar-produto-modal" onclick="fecharModalProduto()">&times;</button>
+            </div>
+            
+            <div class="produto-modal-corpo">
+                <div class="produto-modal-img">Imagem do Produto</div>
+                
+                <div class="produto-modal-detalhes">
+                    <div class="produto-modal-descricao">
+                        Descrição detalhada do produto aparecerá aqui.
+                    </div>
+                    
+                    <div class="produto-modal-info">
+                        <div class="produto-modal-info-item">
+                            <span class="info-item-titulo">Alérgenos:</span>
+                            <span id="modal-alergenos">Informação sobre alérgenos</span>
+                        </div>
+                        
+                        <div class="produto-modal-info-item">
+                            <span class="info-item-titulo">Tempo de Preparo:</span>
+                            <span id="modal-preparo">Tempo estimado</span>
+                        </div>
+                        
+                        <div class="produto-modal-info-item">
+                            <span class="info-item-titulo">Observações:</span>
+                            <span id="modal-observacoes">Observações adicionais</span>
+                        </div>
+                    </div>
+                    
+                    <div class="produto-modal-preco" id="modal-preco">R$ 0,00</div>
+                    
+                    <div class="produto-modal-acoes">
+                        <button class="produto-modal-adicionar" id="modal-adicionar">Adicionar ao Pedido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Variáveis globais
+        let carrinho = [];
+        let contadorCarrinho = 0;
+        let produtoAtual = null;
+        
+        // Funções de scroll
+        document.querySelectorAll('.menu-categorias a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.menu-categorias a').forEach(a => {
+                    a.classList.remove('ativo');
+                });
+                
+                this.classList.add('ativo');
+                
+                const targetId = this.getAttribute('href').substring(1);
+                scrollParaSecao(targetId);
+            });
+        });
+        
+        function scrollParaSecao(id) {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                const yOffset = -80;
+                const y = elemento.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        }
+        
+        // Funções do Carrinho
+        function atualizarContadorCarrinho() {
+            document.querySelector('.carrinho-contador').textContent = contadorCarrinho;
+        }
+        
+        function atualizarTotalCarrinho() {
+            const total = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0);
+            document.querySelector('.total-valor').textContent = `R$ ${total.toFixed(2)}`.replace('.', ',');
+        }
+        
+        function atualizarExibicaoCarrinho() {
+            const carrinhoItens = document.querySelector('.carrinho-itens');
+            
+            if (carrinho.length === 0) {
+                carrinhoItens.innerHTML = '<div class="carrinho-vazio">Seu carrinho está vazio.</div>';
+                return;
+            }
+            
+            carrinhoItens.innerHTML = '';
+            
+            carrinho.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'carrinho-item';
+                
+                itemElement.innerHTML = `
+                    <div class="carrinho-item-img">Item</div>
+                    <div class="carrinho-item-detalhes">
+                        <div class="carrinho-item-nome">${item.nome}</div>
+                        <div class="carrinho-item-preco">R$ ${item.preco.toFixed(2).replace('.', ',')}</div>
+                        <div class="carrinho-item-controles">
+                            <button class="qtd-btn" onclick="alterarQuantidade(${index}, -1)">-</button>
+                            <input type="number" class="qtd-input" value="${item.quantidade}" min="1" onchange="atualizarQuantidadeManual(${index}, this.value)">
+                            <button class="qtd-btn" onclick="alterarQuantidade(${index}, 1)">+</button>
+                            <button class="remover-item" onclick="removerItem(${index})">Remover</button>
+                        </div>
+                    </div>
+                `;
+                
+                carrinhoItens.appendChild(itemElement);
+            });
+            
+            atualizarTotalCarrinho();
+        }
+        
+        function adicionarAoCarrinho(nome, preco) {
+            const itemExistente = carrinho.findIndex(item => item.nome === nome);
+            
+            if (itemExistente !== -1) {
+                carrinho[itemExistente].quantidade += 1;
+            } else {
+                carrinho.push({
+                    nome: nome,
+                    preco: preco,
+                    quantidade: 1
+                });
+            }
+            
+            contadorCarrinho += 1;
+            atualizarContadorCarrinho();
+            
+            // Feedback visual
+            const notificacao = document.createElement('div');
+            notificacao.style.position = 'fixed';
+            notificacao.style.bottom = '20px';
+            notificacao.style.right = '20px';
+            notificacao.style.backgroundColor = 'var(--cor-primaria)';
+            notificacao.style.color = 'white';
+            notificacao.style.padding = '15px 20px';
+            notificacao.style.borderRadius = 'var(--borda-raio)';
+            notificacao.style.boxShadow = 'var(--sombra-suave)';
+            notificacao.style.zIndex = '1000';
+            notificacao.style.animation = 'fadeIn 0.3s ease';
+            notificacao.textContent = `${nome} adicionado ao carrinho!`;
+            
+            document.body.appendChild(notificacao);
+            
+            setTimeout(() => {
+                notificacao.style.animation = 'fadeIn 0.3s ease reverse';
+                setTimeout(() => {
+                    document.body.removeChild(notificacao);
+                }, 300);
+            }, 2000);
+        }
+        
+        function alterarQuantidade(index, alteracao) {
+            const novaQuantidade = carrinho[index].quantidade + alteracao;
+            
+            if (novaQuantidade < 1) {
+                return;
+            }
+            
+            carrinho[index].quantidade = novaQuantidade;
+            contadorCarrinho += alteracao;
+            
+            atualizarContadorCarrinho();
+            atualizarExibicaoCarrinho();
+        }
+        
+        function atualizarQuantidadeManual(index, valor) {
+            const novaQuantidade = parseInt(valor);
+            
+            if (isNaN(novaQuantidade) || novaQuantidade < 1) {
+                atualizarExibicaoCarrinho();
+                return;
+            }
+            
+            const alteracao = novaQuantidade - carrinho[index].quantidade;
+            carrinho[index].quantidade = novaQuantidade;
+            contadorCarrinho += alteracao;
+            
+            atualizarContadorCarrinho();
+            atualizarExibicaoCarrinho();
+        }
+        
+        function removerItem(index) {
+            contadorCarrinho -= carrinho[index].quantidade;
+            carrinho.splice(index, 1);
+            
+            atualizarContadorCarrinho();
+            atualizarExibicaoCarrinho();
+        }
+        
+        function abrirCarrinho() {
+            atualizarExibicaoCarrinho();
+            document.getElementById('carrinho-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function fecharCarrinho() {
+            document.getElementById('carrinho-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function finalizarPedido() {
+            if (carrinho.length === 0) {
+                alert('Adicione produtos ao carrinho antes de finalizar o pedido.');
+                return;
+            }
+            
+            // Aqui você pode implementar a lógica de checkout
+            alert('Pedido finalizado com sucesso! Em breve entraremos em contato para confirmar os detalhes de entrega.');
+            
+            // Limpar carrinho
+            carrinho = [];
+            contadorCarrinho = 0;
+            atualizarContadorCarrinho();
+            
+            fecharCarrinho();
+        }
+        
+        // Funções do Modal de Produto
+        function abrirModalProduto(nome, descricao, preco, alergenos, preparo, observacoes) {
+            document.querySelector('.produto-modal-titulo').textContent = nome;
+            document.querySelector('.produto-modal-descricao').textContent = descricao;
+            document.getElementById('modal-alergenos').textContent = alergenos;
+            document.getElementById('modal-preparo').textContent = preparo;
+            document.getElementById('modal-observacoes').textContent = observacoes;
+            document.getElementById('modal-preco').textContent = `R$ ${preco.toFixed(2)}`.replace('.', ',');
+            
+            produtoAtual = {
+                nome: nome,
+                preco: preco
+            };
+            
+            document.getElementById('modal-adicionar').onclick = function() {
+                adicionarAoCarrinho(produtoAtual.nome, produtoAtual.preco);
+                fecharModalProduto();
+            };
+            
+            document.getElementById('produto-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function fecharModalProduto() {
+            document.getElementById('produto-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Fechar modais quando clicar fora
+        window.onclick = function(event) {
+            const carrinhoModal = document.getElementById('carrinho-modal');
+            const produtoModal = document.getElementById('produto-modal');
+            
+            if (event.target === carrinhoModal) {
+                fecharCarrinho();
+            } else if (event.target === produtoModal) {
+                fecharModalProduto();
+            }
+        };
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            atualizarContadorCarrinho();
+        });
+    </script>
+</body>
+</html>
